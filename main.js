@@ -17,7 +17,6 @@ rl.question("質問1: 鎖骨が目立つ？ (はい/いいえ): ", (answer1) => 
         } else {
           console.log("あなたの診断は難しいですね。");
         }
-        
       } else {
         if (answer3 === 'はい') {
           console.log("あなたは骨格ナチュラルです。");
