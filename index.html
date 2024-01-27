@@ -1,51 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>骨格診断フォーム</title>
+  <title>性格診断</title>
 </head>
 <body>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const rl = {
-      question: function(prompt, callback) {
-        const userInput = prompt(prompt);
-        callback(userInput.trim());
-      },
-      close: function() {
-        // 何かクローズ時の処理が必要な場合はここに追加
+  <script>
+    function askQuestion(question, yesCallback, noCallback) {
+      var answer = prompt(question + " (はい/いいえ)");
+      if (answer === 'はい') {
+        yesCallback();
+      } else if (answer === 'いいえ') {
+        noCallback();
+      } else {
+        alert("無効な回答です。はい または いいえ で回答してください。");
+        askQuestion(question, yesCallback, noCallback);
       }
-    };
+    }
 
-    rl.question("質問1: 鎖骨が目立つ？ (はい/いいえ): ", (answer1) => {
-      rl.question("質問2: お尻に丸みがなく平ら？ (はい/いいえ): ", (answer2) => {
-        rl.question("質問3: Gジャンはけっこう似合う？ (はい/いいえ): ", (answer3) => {
-          // ここで性格診断を行う条件分岐を書きます
-          if (answer1 === 'いいえ') {
-            if (answer2 === 'いいえ') {
-              alert("あなたは骨格ストレートです！");
-            } else if (answer2 === 'はい') {
-              alert("あなたは骨格ウェーブです。");
-            } else {
-              alert("あなたの診断は難しいですね。");
-            }
-          } else {
-            if (answer3 === 'はい') {
-              alert("あなたは骨格ナチュラルです。");
-            } else if (answer3 === 'いいえ') {
-              alert("あなたは骨格ウェーブです。");
-            } else {
-              alert("あなたの診断は難しいですね。");
-            }
-          }
-          rl.close();
-        });
+    askQuestion("質問1: 鎖骨が目立つ？", function() {
+      askQuestion("質問2: お尻に丸みがなく平ら？", function() {
+        alert("あなたは骨格ストレートです！");
+      }, function() {
+        alert("あなたは骨格ウェーブです。");
+      });
+    }, function() {
+      askQuestion("質問3: Gジャンはけっこう似合う？", function() {
+        alert("あなたは骨格ナチュラルです。");
+      }, function() {
+        alert("あなたは骨格ウェーブです。");
       });
     });
-  });
-</script>
-
+  </script>
 </body>
 </html>
