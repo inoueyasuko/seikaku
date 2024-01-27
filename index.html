@@ -6,32 +6,55 @@
   <title>性格診断</title>
 </head>
 <body>
-  <script>
-    function askQuestion(question, yesCallback, noCallback) {
-      var answer = prompt(question + " (はい/いいえ)");
-      if (answer === 'はい') {
-        yesCallback();
-      } else if (answer === 'いいえ') {
-        noCallback();
+
+<script>
+  const questions = [
+    "質問1: 鎖骨が目立つ？ (はい/いいえ): ",
+    "質問2: お尻に丸みがなく平ら？ (はい/いいえ): ",
+    "質問3: Gジャンはけっこう似合う？ (はい/いいえ): "
+  ];
+
+  let currentQuestion = 0;
+  let answers = [];
+
+  function askQuestion() {
+    if (currentQuestion < questions.length) {
+      const answer = prompt(questions[currentQuestion]);
+      answers.push(answer);
+      currentQuestion++;
+      askQuestion();
+    } else {
+      processAnswers();
+    }
+  }
+
+  function processAnswers() {
+    const answer1 = answers[0];
+    const answer2 = answers[1];
+    const answer3 = answers[2];
+
+    if (answer1 === 'いいえ') {
+      if (answer2 === 'いいえ') {
+        alert("あなたは骨格ストレートです！");
+      } else if (answer2 === 'はい') {
+        alert("あなたは骨格ウェーブです。");
       } else {
-        alert("無効な回答です。はい または いいえ で回答してください。");
-        askQuestion(question, yesCallback, noCallback);
+        alert("あなたの診断は難しいですね。");
+      }
+    } else {
+      if (answer3 === 'はい') {
+        alert("あなたは骨格ナチュラルです。");
+      } else if (answer3 === 'いいえ') {
+        alert("あなたは骨格ウェーブです。");
+      } else {
+        alert("あなたの診断は難しいですね。");
       }
     }
+  }
 
-    askQuestion("質問1: 鎖骨が目立つ？", function() {
-      askQuestion("質問2: お尻に丸みがなく平ら？", function() {
-        alert("あなたは骨格ストレートです！");
-      }, function() {
-        alert("あなたは骨格ウェーブです。");
-      });
-    }, function() {
-      askQuestion("質問3: Gジャンはけっこう似合う？", function() {
-        alert("あなたは骨格ナチュラルです。");
-      }, function() {
-        alert("あなたは骨格ウェーブです。");
-      });
-    });
-  </script>
+  // ページ読み込み時に質問を始める
+  askQuestion();
+</script>
+
 </body>
 </html>
